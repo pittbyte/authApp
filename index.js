@@ -8,7 +8,11 @@ const bodyParser = require('body-parser');
 const expressSession = require('express-session') ({
     secret: 'secret',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: true,
+    cookie: {
+        secure:false,
+        maxAge: 60000
+    }
 });
 
 app.use(bodyParser.json());
@@ -70,13 +74,13 @@ app.post('/login', (req, res, next) => {
     }) (req, res, next);
 });
 
-app.get('/login', (req, res) => res.sendFile('html/login.html', {root: __dirname}));
-app.get('/', connectEnsureLogin.ensureLoggedIn(), (req, res) => res.sendFile('html/index.html', {root: __dirname}));
-app.get('/private', connectEnsureLogin.ensureLoggedIn(), (req, res) => res.sendFile('html/private.html', {root: __dirname}));
+app.get('/login', (req, res) => res.sendFile('/login.html', {root: __dirname}));
+app.get('/', connectEnsureLogin.ensureLoggedIn(), (req, res) => res.sendFile('/index.html', {root: __dirname}));
+app.get('/private', connectEnsureLogin.ensureLoggedIn(), (req, res) => res.sendFile('/private.html', {root: __dirname}));
 app.get('/user', connectEnsureLogin.ensureLoggedIn(), (req, res) => res.send({ user: req.user}));
 app.get('/logout', (req, res) => {
-    req.logout(),
-    res.sendFile('html/logout.html', {root: __dirname})
+    req.logout(() => {}); 
+    res.sendFile('/logout.html', {root: __dirname});
 });
  
 /* /*REGISTER SOME USERS*/
@@ -86,4 +90,4 @@ app.get('/logout', (req, res) => {
 
 UserDetails.register({username:'paul', active: false}, 'paul'); 
 UserDetails.register({username:'joy', active: false}, 'joy');
-UserDetails.register({username:'ray', active: false}, 'ray'); */
+UserDetails.register({username:'ray', active: false}, 'ray'); */ 

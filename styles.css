@@ -16,7 +16,7 @@ body {
 a {
     color: azure;
 }
-.filed {
+.field {
     margin: 10px;
 }
 input {
@@ -32,7 +32,7 @@ input {
 .submit-btn {
     width: 100%;
 }
-.tilte {
+.title {
     margin: 10px 0px 20px 10px;
 }
 #error-message {
